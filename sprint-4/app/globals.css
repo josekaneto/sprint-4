@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC&family=Quicksand&display=swap');
+@import "tailwindcss";
+
+@theme{
+    --color-pink: #EE4D9B;
+    --color-purple: #8461C9;
+    --color-green: #6EAA38;
+    --font-title: "Bona Nova SC", serif;
+    --font-corpo: "Quicksand", sans-serif;
+}

@@ -7,16 +7,16 @@ export default function Header() {
         setMenuOpen((open) => !open);
     }
     return (
-        <header className="w-full flex justify-between items-center py-5 px-10 md:px-20 lg:px-56 font-corpo">
+        <header className="w-tamanho flex justify-between items-center py-5 px-10 md:px-20 lg:px-56 font-corpo">
             <img src="/Logo-branca.png" alt="Logo Passa Bola Branca"/>
             <nav className="hidden md:block ml-auto">
                 <ul className="flex gap-7 md:gap-10 text-lg text-white whitespace-nowrap">
                     <li>
-                        <Link className="hover:text-green duration-300" href="./pages/loginPerfil.html">Login</Link>
+                        <Link className="hover:text-green duration-300" href="../Login">Login</Link>
                     </li>
                     <li>
                         <Link className="hover:text-green duration-300"
-                            href="./pages/cadastreSePerfil.html">Cadastre-se</Link>
+                            href="../pages/cadastreSePerfil.html">Cadastre-se</Link>
                     </li>
                     <li>
                         <Link className="hover:text-green duration-300" href="./pages/copasPab.html">Copas PAB</Link>

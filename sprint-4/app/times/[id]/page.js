@@ -5,11 +5,13 @@ import TimeCard from "@/app/Components/TimeCard";
 import SectionContainer from "@/app/Components/SectionContainer";
 import MainContainer from "@/app/Components/MainContainer";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import VoltarButton from "@/app/Components/VoltarButton";
 
 
 export default function PaginaUsuario() {
     const { id: usuarioId } = useParams();
+    const router = useRouter();
     const links = [
         { label: "Inicio", href: `/inicioposlogin/${usuarioId}` },
         { label: "Perfil", href: `/perfil/${usuarioId}` },
@@ -23,13 +25,13 @@ export default function PaginaUsuario() {
             <MainContainer>
                 <SectionContainer tamanho={850}>
                     <div className="w-full flex flex-col items-start justify-center gap-2 mb-6 text-center">
-                        <h2 className="text-2xl md:text-3xl font-bold mb-2">Entrar em um Time</h2>
+                        <h2 className="text-2xl md:text-3xl font-bold mb-2 font-title">Entrar em um Time</h2>
                         <p>Encontre um time para a Copa Passa Bola! <strong className="text-[var(--color-pink)]">Se identifiquem e
                             solicite a entrada!</strong></p>
                     </div>
                     <div className="w-full flex flex-col items-end">
                         <Link className="text-[var(--color-green)] font-semibold" href={`/times/cadastrartime/${usuarioId}`}>Cadastrar um Time</Link>
-                        <Link className="text-[var(--color-pink)] font-semibold" href="./meuTime.html">Meu Time</Link>
+                        <Link className="text-[var(--color-pink)] font-semibold" href={`/times/meutime/${usuarioId}`}>Meu Time</Link>
                     </div>
                     <hr className="my-6 w-full border-gray-300 rounded-xl" />
                     <form className="w-full" action="">

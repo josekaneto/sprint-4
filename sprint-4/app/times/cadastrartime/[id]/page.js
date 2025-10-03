@@ -23,12 +23,29 @@ export default function CadastrarTime({ params }) {
 
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
+    const [cor1, setCor1] = useState('#FFFFFF');
+    const [cor2, setCor2] = useState('#000000');
 
     const handleNomeChange = (e) => {
         setNome(e.target.value);
     };
     const handleDescricaoChange = (e) => {
         setDescricao(e.target.value);
+    };
+
+    // Salva time no localStorage
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const times = JSON.parse(localStorage.getItem("times") || "[]");
+        const idx = times.findIndex(t => String(t.id) === String(usuarioId));
+        const teamData = { id: usuarioId, nome, descricao, cor1, cor2 };
+        if (idx !== -1) {
+            times[idx] = teamData;
+        } else {
+            times.push(teamData);
+        }
+        localStorage.setItem("times", JSON.stringify(times));
+        router.push(`/times/meutime/${usuarioId}`);
     };
 
     return (
@@ -40,7 +57,7 @@ export default function CadastrarTime({ params }) {
                         <div className="w-full flex justify-end">
                             <VoltarButton onClick={() => router.back()} />
                         </div>
-                        <h2 className="text-3xl font-bold mb-5">Cadastrar um Time</h2>
+                        <h2 className="text-3xl font-bold mb-5 font-title">Cadastrar um Time</h2>
                         <div className="w-full flex items-center gap-20">
                             <p>Cadastre o seu Time na Copa Passa a Bola!</p>
                         </div>
@@ -59,12 +76,12 @@ export default function CadastrarTime({ params }) {
                                     <p className="text-[var(--color-pink)] font-bold text-xl sm:text-2xl mb-2">0/15</p>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <Link href="./meuTime.html" className="text-[var(--color-purple)] font-bold text-sm sm:text-base">Visualizar</Link>
-                                    <Link href="#" className="text-[var(--color-purple)] font-bold text-sm sm:text-base">Convidar</Link>
+                                    <Link href={`/times/meutime/${usuarioId}`} className="text-purple font-bold text-sm sm:text-base">Visualizar</Link>
+                                    <Link href={`/times/cadastrartime/convidar/${usuarioId}`} className="text-purple font-bold text-sm sm:text-base">Convidar</Link>
                                 </div>
                             </div>
                         </div>
-                        <form className="w-3/4 flex flex-col gap-6" action="">
+                        <form className="w-3/4 flex flex-col gap-6" onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-center">
                                     <span className="font-bold text-gray-600 text-sm sm:text-base">Nome do Time:</span>
@@ -81,11 +98,13 @@ export default function CadastrarTime({ params }) {
                                 <div className="flex flex-row gap-2 sm:gap-3 mt-1">
                                     <ColorInput
                                         id="cor1"
+                                        value={cor1}
                                         onChange={e => setCor1(e.target.value)}
                                         title="Escolha a cor principal 1"
                                     />
                                     <ColorInput
                                         id="cor2"
+                                        value={cor2}
                                         onChange={e => setCor2(e.target.value)}
                                         title="Escolha a cor principal 2"
                                     />

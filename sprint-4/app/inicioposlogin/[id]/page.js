@@ -6,7 +6,7 @@ export default function PaginaUsuario() {
     const { id: usuarioId } = useParams();
     const links = [
         { label: "Inicio", href: `/inicioposlogin/${usuarioId}` },
-        { label: "Perfil", href: "/perfil" },
+        { label: "Perfil", href: `/perfil/${usuarioId}` },
         { label: "Times", href: `/times/${usuarioId}` },
         { label: "Copas PAB", href: "/copasPab" },
         { label: "Sair", href: "/" }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Header from "./Components/Header";
 
 
@@ -11,6 +12,9 @@ const links = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   return (
     <>
       <section className="w-screen h-screen bg-center bg-no-repeat bg-cover bg-[url(/background1.png)]">

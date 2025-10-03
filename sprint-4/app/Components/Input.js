@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ name, type = "text", placeholder, value, onChange, required = false, className = "" }) => (
+const Input = ({ name, type = "text", placeholder, value, onChange, required = false}) => (
     <input
         name={name}
         type={type}
@@ -8,7 +8,7 @@ const Input = ({ name, type = "text", placeholder, value, onChange, required = f
         value={value}
         onChange={onChange}
         required={required}
-        className={"w-full py-2 border-b-2 border-gray-400 focus:border-pink-500 focus:outline-none " + className}
+        className={"w-full py-2 border-b-2 border-gray-400 focus:border-pink-500 focus:outline-none "}
     />
 );
 

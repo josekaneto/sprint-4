@@ -5,11 +5,11 @@ import TimeCard from "@/app/Components/TimeCard";
 import SectionContainer from "@/app/Components/SectionContainer";
 import MainContainer from "@/app/Components/MainContainer";
 import Link from "next/link";
-import React from "react";
+import { useParams } from "next/navigation";
 
 
-export default function PaginaUsuario({ params }) {
-    const { id: usuarioId } = React.use(params);
+export default function PaginaUsuario() {
+    const { id: usuarioId } = useParams();
     const links = [
         { label: "Inicio", href: `/inicioposlogin/${usuarioId}` },
         { label: "Perfil", href: `/perfil/${usuarioId}` },

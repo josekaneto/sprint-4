@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import VoltarButton from "../../Components/VoltarButton";
+import Input from "../../Components/Input";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -44,7 +45,7 @@ function Login() {
                 </div>
                 <form id="loginForm" className="w-3/4 flex flex-col gap-6 mt-8" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 gap-8 w-full">
-                        <input
+                        <Input
                             name="email"
                             className="w-full py-2 border-b-2 border-gray-400 focus:border-pink-500 focus:outline-none"
                             type="email"
@@ -53,7 +54,7 @@ function Login() {
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                         />
-                        <input
+                        <Input
                             name="senha"
                             className="w-full py-2 border-b-2 border-gray-400 focus:border-pink-500 focus:outline-none"
                             type="password"

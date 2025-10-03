@@ -8,11 +8,11 @@ import Input from '@/app/Components/Input';
 import ColorInput from '@/app/Components/ColorInput';
 import Link from 'next/link';
 import VoltarButton from '@/app/Components/VoltarButton';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 export default function CadastrarTime({ params }) {
     const router = useRouter();
-    const { id: usuarioId } = React.use(params);
+    const { id: usuarioId } = useParams();
     const links = [
         { label: "Inicio", href: `/inicioposlogin/${usuarioId}` },
         { label: "Perfil", href: `/perfil/${usuarioId}` },
@@ -68,7 +68,7 @@ export default function CadastrarTime({ params }) {
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-center">
                                     <span className="font-bold text-gray-600 text-sm sm:text-base">Nome do Time:</span>
-                                    <Input value={nome} onChange={handleNomeChange} placeholder="Nome do time" className="border border-gray-300 rounded-lg px-2 sm:px-3 py-2 text-black bg-white w-full sm:w-48 " />
+                                    <input value={nome} onChange={handleNomeChange} placeholder="Nome do time" className="border rounded-lg px-2 sm:px-3 py-2 text-black bg-white w-full sm:w-48 border-gray-400 focus:border-pink-500 focus:outline-none " />
                                 </div>
                             </div>
                             <div className="flex flex-col gap-1">

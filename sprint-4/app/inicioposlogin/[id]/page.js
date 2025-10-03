@@ -1,9 +1,9 @@
 "use client";
 import Header from "@/app/Components/Header";
-import React from "react";
+import { useParams } from "next/navigation";
 
-export default function PaginaUsuario({ params }) {
-    const { id: usuarioId } = React.use(params);
+export default function PaginaUsuario() {
+    const { id: usuarioId } = useParams();
     const links = [
         { label: "Inicio", href: `/inicioposlogin/${usuarioId}` },
         { label: "Perfil", href: "/perfil" },

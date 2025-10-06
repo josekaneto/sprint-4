@@ -8,6 +8,7 @@ import AuthGuard from "@/app/Components/AuthGuard";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import VoltarButton from "@/app/Components/VoltarButton";
 
 export default function LojaPage() {
     const [loading, setLoading] = useState(true);
@@ -86,8 +87,6 @@ export default function LojaPage() {
         if (typeof window !== "undefined") {
             localStorage.setItem(`carrinho_${usuarioId}`, JSON.stringify(newCart));
         }
-        
-        router.push(`/carrinho/${usuarioId}`);
     };
 
     const filteredProducts = produtos.filter(produto => {
@@ -116,6 +115,9 @@ export default function LojaPage() {
                 <SectionContainer tamanho={600}>
                     <div className="flex flex-col gap-6">
                         <div className="flex flex-col gap-2">
+                        <div className="w-full flex justify-end">
+                            <VoltarButton onClick={() => router.back()}/>
+                        </div>
                             <h1 className="text-4xl font-bold text-pink font-title">LOJA PAB</h1>
                             <div className="flex items-center justify-between gap-4">
                                 <p className="text-lg text-gray-700">Equipamentos e produtos oficiais para seu time!</p>

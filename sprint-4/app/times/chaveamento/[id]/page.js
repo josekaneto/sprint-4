@@ -3,11 +3,29 @@ import Header from "@/app/Components/Header";
 import MainContainer from "@/app/Components/MainContainer";
 import VoltarButton from "@/app/Components/VoltarButton";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Bracket } from "react-brackets";
+import LoadingScreen from "@/app/Components/LoadingScreen";
+import AuthGuard from "@/app/Components/AuthGuard";
 
+export default function ChaveamentoPage() {
 
-export default function Chaveamento() {
+    const { id: usuarioId } = useParams();
+    const router = useRouter();
+    const [loading, setLoading] = useState(true);
+    const [times, setTimes] = useState([]);
+    useEffect(() => {
+        setLoading(true);
+        const usuarios = typeof window !== "undefined" ? localStorage.getItem("usuarios") : null;
+        if (!usuarios) {
+            router.replace("/");
+            return;
+        }
+        const timesLocal = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("times") || "[]") : [];
+        setTimes(Array.isArray(timesLocal) ? timesLocal : []);
+        setLoading(false);
+    }, [router]);
+
     // Componente customizado para blocos menores e responsivos
     function CustomSeed({ seed }) {
         return (
@@ -18,21 +36,15 @@ export default function Chaveamento() {
             </div>
         );
     }
-    const { id: usuarioId } = useParams();
-    const router = useRouter();
 
     const links = [
         { label: "Inicio", href: `/inicioposlogin/${usuarioId}` },
         { label: "Perfil", href: `/perfil/${usuarioId}` },
         { label: "Times", href: `/times/${usuarioId}` },
+        { label: "Loja", href: `/loja/${usuarioId}` },
         { label: "Copas PAB", href: `/copasPab/${usuarioId}` },
         { label: "Sair", href: "/" }
     ];
-
-    let times = [];
-    if (typeof window !== "undefined") {
-        times = JSON.parse(localStorage.getItem("times") || "[]");
-    }
 
     // Função para gerar rounds single elimination para até 16 times
     function generateRounds(timesArr) {
@@ -110,8 +122,12 @@ export default function Chaveamento() {
         ]);
     }
 
+    if (loading) {
+        return <LoadingScreen />;
+    }
+
     return (
-        <>
+        <AuthGuard>
             <Header links={links} bgClass="bg-white" src="/Logo-preta.png" color="text-black" />
             <MainContainer>
                 <div className="min-h-screen w-full flex flex-col items-center px-2 md:px-8 py-6 md:py-10">
@@ -138,9 +154,6 @@ export default function Chaveamento() {
                     </div>
                 </div>
             </MainContainer>
-        </>
-
+        </AuthGuard>
     );
 }
-
-

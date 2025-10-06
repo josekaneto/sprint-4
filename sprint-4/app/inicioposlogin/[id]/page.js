@@ -4,6 +4,8 @@ import Header from "@/app/Components/Header";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import LoadingScreen from "@/app/Components/LoadingScreen";
+import AuthGuard from "@/app/Components/AuthGuard";
 
 export default function PaginaUsuario() {
     const [loading, setLoading] = useState(true);
@@ -12,29 +14,22 @@ export default function PaginaUsuario() {
         { label: "Inicio", href: `/inicioposlogin/${usuarioId}` },
         { label: "Perfil", href: `/perfil/${usuarioId}` },
         { label: "Times", href: `/times/${usuarioId}` },
+        { label: "Loja", href: `/loja/${usuarioId}` },
         { label: "Copas PAB", href: "/copasPab" },
         { label: "Sair", href: "/" }
     ];
-
-    const router = useRouter();
     useEffect(() => {
         setLoading(true);
-    const usuarios = typeof window !== "undefined" ? localStorage.getItem("usuarios") : null;
-    if (!usuarios) {
-            router.replace("/");
-            return;
-        }
-        setLoading(false);
-    }, [router]);
-    
+        setTimeout(() => setLoading(false), 500); // Simula carregamento
+    }, []);
     if (loading) {
-        return (
-            <div className="w-full h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500"></div>
-            </div>
-        );
+        return <LoadingScreen />;
     }
     return (
-        <Header links={links} bgClass="bg-black" src="/Logo-branca.png" color="text-white" />
+        <AuthGuard>
+            <section className="w-screen h-screen bg-center bg-no-repeat bg-cover bg-[url(/background2.png)]">
+                <Header links={links} bgClass="bg-transparent" src="/Logo-branca.png" color="text-white" />
+            </section>
+        </AuthGuard>
     );
 }

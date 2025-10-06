@@ -1,5 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import LoadingScreen from '@/app/Components/LoadingScreen';
+import AuthGuard from '@/app/Components/AuthGuard';
 import Header from '@/app/Components/Header';
 import MainContainer from '@/app/Components/MainContainer';
 import SectionContainer from '@/app/Components/SectionContainer';
@@ -9,7 +11,8 @@ import Link from 'next/link';
 import VoltarButton from '@/app/Components/VoltarButton';
 import { useParams, useRouter } from 'next/navigation';
 
-export default function CadastrarTime({ params }) {
+
+export default function CadastrarTime() {
     const router = useRouter();
     const { id: usuarioId } = useParams();
     const [loading, setLoading] = useState(true);
@@ -17,6 +20,7 @@ export default function CadastrarTime({ params }) {
         { label: "Inicio", href: `/inicioposlogin/${usuarioId}` },
         { label: "Perfil", href: `/perfil/${usuarioId}` },
         { label: "Times", href: `/times/${usuarioId}` },
+        { label: "Loja", href: `/loja/${usuarioId}` },
         { label: "Copas PAB", href: `/copasPab/${usuarioId}` },
         { label: "Sair", href: "/" }
     ];
@@ -76,11 +80,7 @@ export default function CadastrarTime({ params }) {
     }, [router, usuarioId]);
 
     if (loading) {
-        return (
-            <div className="w-full h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500"></div>
-            </div>
-        );
+        return <LoadingScreen />;
     }
 
     return (
@@ -155,5 +155,3 @@ export default function CadastrarTime({ params }) {
         </div>
     );
 }
-
-

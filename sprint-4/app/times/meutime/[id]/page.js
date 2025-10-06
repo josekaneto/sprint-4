@@ -22,6 +22,7 @@ export default function MeuTime() {
         { label: "Inicio", href: `/inicioposlogin/${id}` },
         { label: "Perfil", href: `/perfil/${id}` },
         { label: "Times", href: `/times/${id}` },
+		{ label: "Loja", href: `/loja/${id}` },
         { label: "Copas PAB", href: `/copasPab/${id}` },
         { label: "Sair", href: "/" }
     ];

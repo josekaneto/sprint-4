@@ -7,8 +7,10 @@ import VoltarButton from "@/app/Components/VoltarButton";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import Header from "@/app/Components/Header";
+import LoadingScreen from "@/app/Components/LoadingScreen";
+import AuthGuard from "@/app/Components/AuthGuard";
 
-function ConvidarJogadoras() {
+export default function ConvidarJogadoras() {
     const [loading, setLoading] = useState(true);
     const [novaJogadora, setNovaJogadora] = useState({ nomeCompleto: "", pernaDominante: "", posicao: "" });
     const [jogadoras, setJogadoras] = useState([]);
@@ -18,6 +20,7 @@ function ConvidarJogadoras() {
         { label: "Inicio", href: `/inicioposlogin/${id}` },
         { label: "Perfil", href: `/perfil/${id}` },
         { label: "Times", href: `/times/${id}` },
+        { label: "Loja", href: `/loja/${id}` },
         { label: "Copas PAB", href: `/copasPab/${id}` },
         { label: "Sair", href: "/" }
     ];
@@ -60,15 +63,10 @@ function ConvidarJogadoras() {
     };
 
     if (loading) {
-        return (
-            <div className="w-full h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500"></div>
-            </div>
-        );
+        return <LoadingScreen />;
     }
-
     return (
-        <>
+        <AuthGuard>
             <Header links={links} bgClass="bg-white" src="/Logo-preta.png" color="text-black" />
             <MainContainer classeAdicional="md:py-10">
                 <SectionContainer tamanho={650}>
@@ -128,10 +126,9 @@ function ConvidarJogadoras() {
                     </div>
                 </SectionContainer>
             </MainContainer>
-        </>
+        </AuthGuard>
     );
 }
 
-export default ConvidarJogadoras;
 
 

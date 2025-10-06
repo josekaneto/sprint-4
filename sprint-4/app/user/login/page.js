@@ -22,6 +22,10 @@ function Login() {
         }
         // Busca usuários no localStorage
         const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+        if (!usuarios.length) {
+            setErro("Nenhum usuário cadastrado. Cadastre-se primeiro!");
+            return;
+        }
         const usuario = usuarios.find(u => u.email === email && u.senha === senha);
         if (usuario) {
             setErro("");
@@ -66,7 +70,7 @@ function Login() {
                     </div>
                     <div className="w-full flex justify-end">
                         <Link
-                            className="text-center text-lg text-[var(--color-pink)] "
+                            className="text-center text-lg text-pink "
                             href={{
                                 pathname: "/esqueciMinhaSenha",
                                 query: { email }

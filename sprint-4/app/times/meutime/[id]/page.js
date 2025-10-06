@@ -11,6 +11,13 @@ import { useEffect, useState } from "react";
 export default function MeuTime() {
 	const { id } = useParams();
 	const router = useRouter();
+	// Proteção de rota: redireciona se não estiver logado
+	useEffect(() => {
+	const usuarios = typeof window !== "undefined" ? localStorage.getItem("usuarios") : null;
+	if (!usuarios) {
+			router.replace("/");
+		}
+	}, [router]);
     const links = [
         { label: "Inicio", href: `/inicioposlogin/${id}` },
         { label: "Perfil", href: `/perfil/${id}` },
@@ -18,14 +25,14 @@ export default function MeuTime() {
         { label: "Copas PAB", href: `/copasPab/${id}` },
         { label: "Sair", href: "/" }
     ];
-	const [time, setTime] = useState({ nome: "", descricao: "", cor1: "#3b82f6", cor2: "#d1d5db", id: id });
+	const [time, setTime] = useState({ nome: "", descricao: "", cor1: "#3b82f6", cor2: "#d1d5db", id: id, imagem: null });
 	const [jogadoras, setJogadoras] = useState([]);
 
 	useEffect(() => {
 		// Carrega time do localStorage
-		const times = JSON.parse(localStorage.getItem("times") || "[]");
-		const t = times.find(t => String(t.id) === String(id));
-		if (t) setTime({ nome: t.nome, descricao: t.descricao, cor1: t.cor1 || "#3b82f6", cor2: t.cor2 || "#d1d5db", id: t.id });
+	const times = JSON.parse(localStorage.getItem("times") || "[]");
+	const t = times.find(t => String(t.id) === String(id));
+	if (t) setTime({ nome: t.nome, descricao: t.descricao, cor1: t.cor1 || "#3b82f6", cor2: t.cor2 || "#d1d5db", id: t.id, imagem: t.imagem || null });
 		// Carrega jogadoras convidadas
 		setJogadoras(JSON.parse(localStorage.getItem("jogadoras") || "[]"));
 	}, [id]);
@@ -51,12 +58,16 @@ export default function MeuTime() {
 		<MainContainer>
 			<SectionContainer tamanho={800}>
                 <div className="w-full flex justify-end mb-4">
-                    <VoltarButton onClick={() => router.back()} />
+                    <VoltarButton onClick={() => router.push(`/times/${id}`)} />
                 </div>
 				<div className="rounded-2xl p-4 md:p-8 bg-white">
 					<div className="flex flex-col items-center justify-center gap-2 mb-2">
 						<h1 className="text-3xl font-bold text-pink-500 mb-2">{time.nome || "Time"}</h1>
-						<img src="/womensTeams.png" alt="Logo Time" className="w-32 h-32 object-contain mb-2" />
+						{time.imagem ? (
+							<img src={time.imagem} alt="Logo Time" className="w-32 h-32 object-contain mb-2 rounded-full border-4 border-purple shadow-lg" />
+						) : (
+							<img src="/womensTeams.png" alt="Logo Time" className="w-32 h-32 object-contain mb-2 rounded-full border-4 border-purple shadow-lg" />
+						)}
 					</div>
 					<div className="flex flex-row justify-between items-center mb-2">
 						<div className="flex flex-col gap-2">
@@ -71,7 +82,7 @@ export default function MeuTime() {
 									<span className="text-xs mt-1 text-gray-500">{time.cor2}</span>
 								</div>
 							</div>
-							<span className="mt-2 font-semibold text-gray-700">Jogadoras: <span className="text-[var(--color-purple)] font-bold text-xl">{jogadoras.length}/15</span></span>
+							<span className="mt-2 font-semibold text-gray-700">Jogadoras: <span className="text-purple font-bold text-xl">{jogadoras.length}/15</span></span>
 						</div>
 						<div className="flex flex-col items-end gap-2">
                                 <Link className="text-purple font-bold text-sm md:text-base" href={`/times/cadastrartime/convidar/${id}`}>Convidar Jogadoras</Link>

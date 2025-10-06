@@ -7,16 +7,20 @@ export default function Header({ links = [], bgClass = "", src="", color="" }) {
     function toggleMenu() {
         setMenuOpen((open) => !open);
     }
+    // Detecta admin dinamicamente
+    // Atualiza isAdmin quando usuarioLogado muda
+    
     return (
         <header className={`w-tamanho flex justify-between items-center py-5 px-10 md:px-20 lg:px-56 font-corpo ${bgClass}`}>
-            <img src={src} alt="Logo Passa Bola Branca"/>
+            <img className="w-28" src={src} alt="Logo Passa Bola"/>
             <nav className="hidden md:block ml-auto">
                 <ul className={`flex gap-7 md:gap-10 text-lg ${color} whitespace-nowrap`}>
                     {links.map(link => (
                         <li key={link.href}>
-                            <Link className="hover:text-green duration-300" href={link.href}>{link.label}</Link>
+                            <Link className="hover:text-green duration-300 text-xl" href={link.href}>{link.label}</Link>
                         </li>
                     ))}
+                    {/* ...nenhum link condicional para admin... */}
                 </ul>
             </nav>
             <div className="md:hidden flex items-center justify-center relative">
@@ -34,6 +38,7 @@ export default function Header({ links = [], bgClass = "", src="", color="" }) {
                                 <Link className="text-pink font-bold" href={link.href}>{link.label}</Link>
                             </li>
                         ))}
+                        {/* ...nenhum link condicional para admin... */}
                     </ul>
                 </nav>
             </div>
